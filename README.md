@@ -101,27 +101,45 @@ GameBuilder 是移动端轻量HTML5游戏快速开发框架，主要应用于活
 **utils工具库**
 
 isBadAndroid - 是否低端安卓机
+
 getTime - 返回当前时间戳
+
 hasTransform - 是否支持transform
+
 hasTransition - 是否支持transition
+
 hasTouch - 是否支持触摸事件
+
 extend(target,obj) - 用obj对象扩展target对象
+
 each(arrays,callback) - 像$.each一样的用法
+
 ease - 一些常用的贝塞尔曲线
 
 **$工具库**
 
 $()
+
 html()
+
 attr()
+
 each()
+
 show()
+
 hide()
+
 addClass()
+
 hasClass()
+
 removeClass()
+
 siblings()
+
 append()
+
 on()
 
 **配置项**
