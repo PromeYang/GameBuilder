@@ -140,6 +140,67 @@ canvas{
     100% { -webkit-transform:rotate(360deg); }
 }
 
+.mod-popup{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.mod-popup__bg{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    opacity: 0;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-duration : 0.5s;
+
+    &.is-popupFadeOut{
+        -webkit-animation-name : popupFadeOut;
+    }
+
+    &.is-popupFadeIn{
+        -webkit-animation-name : popupFadeIn;
+    }
+}
+.mod-popup__panel{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+.mod-popup__panelBd{
+    position: relative;
+    margin-left: -50%;
+    margin-top: -50%;
+}
+.mod-popup__custom{
+    -webkit-transform: scale(0);
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-duration : 0.5s;
+
+    &.is-popupIn{
+        -webkit-animation-name : popupIn;
+    }
+
+    &.is-popupOut{
+        -webkit-animation-name : popupOut;
+    }
+}
+@-webkit-keyframes popupFadeOut {
+    100% { opacity: 1; }
+}
+@-webkit-keyframes popupFadeIn {
+    100% { opacity: 0; }
+}
+@-webkit-keyframes popupOut {
+    0% { -webkit-transform: scale(0); }
+    60% { -webkit-transform: scale(1.1); }
+    100% { -webkit-transform: scale(1); }
+}
+@-webkit-keyframes popupIn {
+    0% { -webkit-transform: scale(1); }
+    60% { -webkit-transform: scale(1.1); }
+    100% { -webkit-transform: scale(0); }
+}
+
 /* global */
 .body-page{
     position: absolute;

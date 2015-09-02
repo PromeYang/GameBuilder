@@ -150,6 +150,14 @@ scanImg - 默认为 `true`，是否扫描img标签作为资源加载
 
 loadFinish() - 资源加载完成的处理
 
+startEvent() - 游戏开始的处理
+
+pauseEvent() - 游戏暂停的处理
+
+endEvent() - 游戏结束的处理
+
+devicemotionEvent() - 摇一摇事件触发的回调
+
 **静态方法**
 
 prevPage() - 主体内容分页，上一页
@@ -162,6 +170,18 @@ showToolPage(opts) - 打开消息提示界面
 
 hideToolPage(opts) - 关闭消息提示界面
 
+start() - 游戏开始
+
+pause() - 游戏暂停
+
+end() - 游戏结束
+
+devicemotion() - 监听摇一摇事件
+
 ## 更新说明
 
 * 1.0 基础版本。
+* 1.1 新增gameStatus，0-游戏就绪 1-游戏开始 2-游戏暂停 3-游戏结束
+* 1.2 新增start,pause,end静态方法和startEvent,pauseEvent,endEvent回调函数
+* 1.3 新增devicemotion静态方法，和devicemotionEvent回调函数，用于监听摇一摇事件
+* 1.4 新增popupTool配置，是否使用弹出层工具，showToolPage静态方法新增popup用法

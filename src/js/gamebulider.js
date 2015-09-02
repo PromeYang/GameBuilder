@@ -327,12 +327,18 @@
         this.resourcesLoaded = 0;
         this.nowPageIndex = 0;
         this.maxPageIndex = $('.game-page').length;
+        this.gameStatus = 0; // 0-游戏就绪 1-游戏开始 2-游戏暂停 3-游戏结束
 
         this.options = {
             scanImg:true,
+            popupTool:true,
             loadFinish: function() {
                 console.log(self)
-            }
+            },
+            startEvent:function(){},
+            pauseEvent:function(){},
+            endEvent:function(){},
+            devicemotionEvent:function(){}
         };
 
         utils.extend(this.options,options);
@@ -346,6 +352,37 @@
         $: $,
         _init: function() {
             this._scanImg();
+            this._popupInit();
+        },
+        _popupInit: function(){
+            if(!this.options.popupTool) return;
+            var self=this;
+            var renderDom='\
+                <div class="tool-page" data-type="popup">\
+                    <div class="mod-popup">\
+                        <div class="mod-popup__bg" data-js="popup-bg"></div>\
+                        <div class="mod-popup__panel">\
+                            <div class="mod-popup__panelBd">\
+                                <div class="mod-popup__custom" data-js="popup-custom"></div>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </div>\
+            ';
+            this.$('.body-page').append(renderDom);
+            var $mod=this.$('.body-page [data-type="popup"]');
+            var $bg=this.$('.body-page [data-js="popup-bg"]');
+            var $custom=this.$('.body-page [data-js="popup-custom"]');
+            $custom.on('webkitAnimationEnd',function(){
+                if(self.$(this).hasClass('is-popupIn')){
+                    $mod.hide();
+                    $bg.removeClass('is-popupFadeOut');
+                    $custom.removeClass('is-popupIn');
+                }
+            });
+            $bg.on('click',function(){
+                $custom.removeClass('is-popupOut').addClass('is-popupIn');
+            });
         },
         _scanImg: function() {
             if(!this.options.scanImg) return;
@@ -358,6 +395,9 @@
                     $('#loadingProcess').html(Math.round(self.resourcesLoaded / self.resourcesLength * 100));
                     if (self.resourcesLoaded >= self.resourcesLength) {
                         self.options.loadFinish();
+                        self.utils.each(self.resourcesAry,function(i,r){
+                            self.$('img[data-id="'+r.id+'"]')[0].src=r.src;
+                        });
                     }
                 };
                 loader.src = 'http://lol.duowan.com/s/lolFaceGame/img/' + $(this).attr('data-id') + '.' + $(this).attr('data-type');
@@ -366,6 +406,48 @@
                     src: loader.src
                 });
             });
+        },
+        start: function(){
+            this.gameStatus=1;
+            this.options.startEvent();
+        },
+        pause: function(){
+            this.gameStatus=2;
+            this.options.pauseEvent();
+        },
+        end: function(){
+            this.gameStatus=3;
+            this.options.endEvent();
+        },
+        devicemotion: function(){
+            var self=this;
+            (function(){
+                var SHAKE_THRESHOLD = 1200;
+                var last_update = 0;
+                var x, y, z, last_x, last_y, last_z;
+
+                function devicemotion(e) {
+                    var acceleration =e.accelerationIncludingGravity;
+                    var curTime = new Date().getTime();
+                    if ((curTime - last_update)> 100) {
+                        var diffTime = curTime -last_update;
+                        last_update = curTime;
+                        x = acceleration.x;
+                        y = acceleration.y;
+                        z = acceleration.z;
+                        var speed = Math.abs((x +y + z) - (last_x+last_y+last_z)) / diffTime * 10000;
+
+                        if (speed > SHAKE_THRESHOLD) {
+                            self.options.devicemotionEvent();
+                        }
+                        last_x = x;
+                        last_y = y;
+                        last_z = z;
+                    }
+                }
+
+                window.addEventListener('devicemotion', devicemotion, false);
+            })();
         },
         prevPage: function() {
             if (this.nowPageIndex > 1) {
@@ -392,6 +474,17 @@
         showToolPage:function(opts){
             if(!opts || !opts.name) return;
             $('.tool-page[data-type="'+opts.name+'"]').show();
+            var $bg=this.$('.tool-page[data-type="'+opts.name+'"] [data-js="popup-bg"]');
+            var $custom=this.$('.tool-page[data-type="'+opts.name+'"] [data-js="popup-custom"]');
+            var $panelBd=this.$('.mod-popup__panelBd');
+            if(opts.name=='popup' && opts.render){
+                $custom.html(opts.render);
+                setTimeout(function(){
+                    $bg.removeClass('is-popupFadeIn').addClass('is-popupFadeOut');
+                    $custom.removeClass('is-popupIn').addClass('is-popupOut');
+                    $panelBd[0].style.marginTop=-$custom[0].clientHeight*0.5+'px';
+                },0);
+            }
         },
         hideToolPage:function(opts){
             if(!opts || !opts.name ) $('.tool-page').hide();
