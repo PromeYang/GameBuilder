@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <!-- 立即过期 -->
+    <meta http-equiv="expires" content="0">
+    <!-- 缓存机制 -->
+    <meta http-equiv="cache-control" content="no-cache">
+    <!-- <link rel="stylesheet" href="http://assets.dwstatic.com/game/lolFaceGame/css/games.css"> -->
+    <link rel="stylesheet" href="css/gamebulider.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/index.css">
+    <title> 摇一摇 </title>
+</head>
+<body>
+    <div id="preloadPage">
+        <img id="loadingImg" src="http://lol.duowan.com/s/lolFaceGame/img/icon.png">
+        <div id="loadingText">
+            <i></i>
+            <span>光速加载中...</span>
+            <span id="loadingProcess">0</span>%
+            </div>
+    </div>
+
+    <div class="body-page">
+        <div class="game-page is-right" data-index="1" id="startPage">
+            <div class="ui-btn">
+                <p id="rule">活动规则</p>
+                <div class="ui-title">还有10次抽奖机会</div>
+            </div>
+            <div class="ui-bar">
+                <div id="bar" class="ui-bar__bd">
+                    <div class="ui-bar__hd"></div>
+                </div>
+            </div>
+            <div id="tips" class="ui-tips animated tada">点击开始摇大奖</div>
+            <!-- <div id="gift" class="ui-gift gift1"></div> -->
+        </div>
+
+        <div class="tool-page" data-type="share" id="sharePage">
+            <div class="ui-sharePic">
+                <img data-id="share" data-type="png" height="128" alt="">
+            </div>
+            <div class="ui-shareText">
+                点击右上角分享
+            </div>
+        </div>
+
+        <div class="tool-page" data-type="wait" id="waitingPage" >
+            <div class="mod-waiting">
+                <div class="mod-waiting__bd">
+                    <div class="mod-waiting__inner"></div>
+                    <div class="mod-waiting__outer"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="tool-page" data-type="test">
+            <div class="ui-popup">
+                <div class="ui-popup__title">
+                    活动规则
+                </div>
+                <div class="ui-popup__content">
+                    1.点击之后开始游戏
+                    <br>
+                    2.必须要快速摇动手机充满能量条
+                </div>
+            </div>
+        </div> -->
+
+    </div>
+
+    <script src="js/gamebulider.js"></script>
+    <script>
+    var game=new GB({
+        loadFinish:function(){
+            game.nextPage();
+        },
+        startEvent:function(){
+            game.devicemotion();
+            reduce();
+        },
+        endEvent:function(){
+            game.$('#startPage').append('<div id="gift" class="ui-gift gift1 zoomInDown"></div>');
+            game.showToolPage({
+                name:'popup',
+                render:popupRender.result
+            });
+        },
+        devicemotionEvent:function(){
+            if(game.gameStatus!=3){
+                actions++;
+                resetBar();
+                if(actions>=maxActions){
+                    game.end();
+                }   
+            }
+        }
+    });
+
+    var popupRender={
+        rule:'\
+            <div class="ui-popup">\
+                <div class="ui-popup__title">\
+                    活动规则\
+                </div>\
+                <div class="ui-popup__content">\
+                    1.点击之后开始游戏\
+                    <br>\
+                    2.必须要快速摇动手机充满能量条\
+                </div>\
+            </div>\
+        ',
+        result:'\
+            <div class="ui-popup">\
+                <div class="ui-popup__title">\
+                    中奖啦！\
+                </div>\
+                <div class="ui-popup__content">\
+                    <div class="ui-popup__contentPic">\
+                        <img src="img/gift1.png" width="150" height="150" />\
+                    </div>\
+                </div>\
+            </div>\
+        '
+    };
+
+    var ticker=setTimeout(reduce,1000),
+        actions=0,
+        maxActions=10,
+        endGame=false;
+
+    game.$('#tips').on('click',function(){
+        game.$(this).hide();
+        game.start();
+    });
+
+    game.$('#rule').on('click',function(){
+        game.showToolPage({
+            name:'popup',
+            render:popupRender.rule
+        });
+    });
+
+    function reduce(){
+        if(actions>0 && game.gameStatus!=3){
+            actions--;
+            resetBar();
+        }
+        if(game.gameStatus!=3) setTimeout(reduce,1000);
+    }
+
+    function resetBar(){
+        game.$('#bar')[0].style.height=Math.round((actions/maxActions)*100)+'%';
+    }
+
+    </script>
+    
+</body>
+</html>
