@@ -21,7 +21,7 @@ GameBuilder 是移动端轻量HTML5游戏快速开发框架，主要应用于活
 ### 1.引入样式文件
 
 ```html
-<link rel="stylesheet" href="http://assets.dwstatic.com/game/gamebulider/css/gamebulider.css">
+<link rel="stylesheet" href="http://assets.dwstatic.com/gamebuilder/css/gamebuilder.css">
 ```
 
 ### 2.引入脚本文件
@@ -29,7 +29,7 @@ GameBuilder 是移动端轻量HTML5游戏快速开发框架，主要应用于活
 ```html
 <body>
     ...
-    <script src="http://assets.dwstatic.com/game/gamebulider/js/gamebulider.js"></script>
+    <script src="http://assets.dwstatic.com/gamebuilder/js/gamebuilder.js"></script>
 </body>
 ```
 
@@ -51,7 +51,7 @@ GameBuilder 是移动端轻量HTML5游戏快速开发框架，主要应用于活
     <meta name="x5-fullscreen" content="true">
     <meta http-equiv="expires" content="0">
     <meta http-equiv="cache-control" content="no-cache">
-    <link rel="stylesheet" href="css/gamebulider.css">
+    <link rel="stylesheet" href="http://assets.dwstatic.com/gamebuilder/css/gamebuilder.css">
     <title> title </title>
 </head>
 <body>
@@ -79,14 +79,32 @@ GameBuilder 是移动端轻量HTML5游戏快速开发框架，主要应用于活
             </div>
         </div>    
     </div>
-    <script src="js/gamebulider.js"></script>
+    <script src="http://assets.dwstatic.com/gamebuilder/js/gamebuilder.js"></script>
 </body>
 </html>
 ```
 
 ## 说明
 
-### 约定
+### 推荐文件结构(游戏模板)
+
+```
+yourProj/
+│
+├── config.json                // 模板配置文件,必须编写,用于开发调试和上传模板时后台生成给用户编辑的选项
+│
+├── css/                       // 样式文件
+│
+├── img/                       // 图片资源
+│
+├── js/                        // 脚本文件
+│
+├── res/                       // 素材资源
+│
+└── index.html                 // 游戏入口
+```
+
+### 开发规范
 
 1.界面分三种类型，资源加载界面（load-page）、主体内容界面（body-page）和消息提示界面（tool-page），主体内容分页（game-page）从`data-index="1"`开始，资源加载界面为`0`，消息提示界面不属于分页内容。
 
@@ -96,7 +114,7 @@ GameBuilder 是移动端轻量HTML5游戏快速开发框架，主要应用于活
 
 4.如果是设定为可以配置内容的项，需要提供`data-set-xxx`的钩子
 
-### gamebulider.js使用说明
+### gamebuilder.js使用说明
 
 **utils工具库**
 
