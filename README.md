@@ -174,6 +174,18 @@ yourProj/
 <div data-gb="gameStartTips" id="tips" class="ui-tips animated tada">点击开始摇大奖</div>
 ```
 
+其中,`name`为该编辑项在后台编辑界面显示的名称
+
+其中,`type`为该编辑项在后台编辑界面生成可编辑的类型,目前可选项为:
+
+* 1
+
+* 2
+
+其中,`tips`
+
+其中,`value`为该配置项的值,可以在开发过程中使用`getValue('gameStartTips')`获得该值
+
 
 ### 4.初始化`gamebuilder`
 
