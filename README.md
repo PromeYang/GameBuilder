@@ -159,6 +159,22 @@ yourProj/
 }
 ```
 
+`editOptions`为可以提供给用户的编辑项集合,每一项属性为一个可以编辑的选项,并与html页面中的自定义属性`data-gb`一一对应.如:
+
+```
+"gameStartTips": {
+    "name": "提示文案",
+    "type": "text",
+    "tips": "请输入游戏开始前的提示文案",
+    "value": "点击开始摇大奖"
+}
+
+对应
+
+<div data-gb="gameStartTips" id="tips" class="ui-tips animated tada">点击开始摇大奖</div>
+```
+
+
 ### 4.初始化`gamebuilder`
 
 所有的`options`都是可选的,初始化会执行相关依赖代码,当`gamebuilder`准备就绪之后会调用`game.ready`
