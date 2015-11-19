@@ -116,7 +116,48 @@ yourProj/
 
 ### 3.`config.json`配置文件
 
+作为游戏模板开发,必须包含config.json配置文件
 
+```
+{
+    "name": "name",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "editOptions": {
+        "pageTitle": {
+            "name": "页面标题",
+            "type": "text",
+            "tips": "请输入页面标题",
+            "value": "游戏模板"
+        },
+        "gameStartTips": {
+            "name": "提示文案",
+            "type": "text",
+            "tips": "请输入游戏开始前的提示文案",
+            "value": "点击开始摇大奖"
+        },
+        "gameIcon": {
+            "name": "游戏图标",
+            "type": "photo-img",
+            "tips": "请选择200x200的游戏图标,用于游戏加载时显示",
+            "value": "http://lol.duowan.com/s/lolFaceGame/img/icon.png"
+        },
+        "gameBg": {
+            "name": "游戏背景",
+            "type": "photo-bgi",
+            "tips": "请选择640x1136的游戏背景,用于游戏背景显示",
+            "value": "http://lol.duowan.com/s/lolFaceGame/img/icon.png"
+        },
+        "gameGift": {
+            "name": "游戏奖品",
+            "type": "photo-img",
+            "tips": "请选择200x200的奖品图案,用于获奖时显示",
+            "value": "img/gift1.png"
+        }
+    }
+}
+```
 
 ### 4.初始化`gamebuilder`
 
