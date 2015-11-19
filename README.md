@@ -110,9 +110,7 @@ yourProj/
 
 2.消息提示界面（tool-page）也有三种类型，分享页、等待页、弹出页（如结果提示，消息提示，文案提示）。
 
-3.使用img标签加载图片资源时，`data-id`代表图片文件名，`data-type`代表图片文件格式。
-
-4.如果是设定为可以配置内容的项，需要提供`data-set-xxx`的钩子
+3.使用img标签加载图片资源时，使用`data-gb-url`自定义属性保存图片资源的路径,如:`data-gb-url="***"`。
 
 ### 3.`config.json`配置文件
 
@@ -174,18 +172,19 @@ yourProj/
 <div data-gb="gameStartTips" id="tips" class="ui-tips animated tada">点击开始摇大奖</div>
 ```
 
-其中,`name`为该编辑项在后台编辑界面显示的名称
+其中,`name`为该编辑项在后台编辑界面显示的可编辑项名称
 
 其中,`type`为该编辑项在后台编辑界面生成可编辑的类型,目前可选项为:
 
-* 1
+* `text` - 纯文本编辑项
 
-* 2
+* `photo-img` - 对应`<img>`标签的图片素材编辑项
 
-其中,`tips`
+* `photo-bgi` - 对应使用`background-imgage`方式的图片素材编辑项
+
+其中,`tips`为该编辑项在后台编辑界面显示的可编辑项提示文案
 
 其中,`value`为该配置项的值,可以在开发过程中使用`getValue('gameStartTips')`获得该值
-
 
 ### 4.初始化`gamebuilder`
 
