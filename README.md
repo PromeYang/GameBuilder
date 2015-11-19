@@ -86,7 +86,7 @@ GameBuilder 是移动端轻量HTML5游戏快速开发框架，主要应用于活
 
 ## 说明
 
-### 推荐文件结构(游戏模板)
+### 1.推荐文件结构(游戏模板)
 
 ```
 yourProj/
@@ -104,7 +104,7 @@ yourProj/
 └── index.html                 // 游戏入口
 ```
 
-### 开发规范
+### 2.开发规范
 
 1.界面分三种类型，资源加载界面（load-page）、主体内容界面（body-page）和消息提示界面（tool-page），主体内容分页（game-page）从`data-index="1"`开始，资源加载界面为`0`，消息提示界面不属于分页内容。
 
@@ -114,7 +114,49 @@ yourProj/
 
 4.如果是设定为可以配置内容的项，需要提供`data-set-xxx`的钩子
 
-### gamebuilder.js使用说明
+### 3.`config.json`配置文件
+
+
+
+### 4.初始化`gamebuilder`
+
+所有的`options`都是可选的,初始化会执行相关依赖代码,当`gamebuilder`准备就绪之后会调用`game.ready`
+
+```html
+<script>
+    var game = new GB({
+        // options here
+    });
+
+    game.ready =function(){
+        // code here
+    };
+</script>
+```
+
+**配置项**
+
+scanImg - 默认为 `false`，是否扫描img标签作为资源加载
+
+popupTool - 默认为 `true`，是否使用弹出层
+
+**回调函数**
+
+loadFinish() - 资源加载完成的处理
+
+startEvent() - 游戏开始的处理
+
+pauseEvent() - 游戏暂停的处理
+
+endEvent() - 游戏结束的处理
+
+restartEvent() - 游戏重新开始的处理
+
+devicemotionEvent() - 摇一摇事件触发的回调
+
+updateEvent() - 资源发生变化时游戏视图更新的处理
+
+### 5.gamebuilder使用说明
 
 **utils工具库**
 
@@ -160,22 +202,6 @@ append()
 
 on()
 
-**配置项**
-
-scanImg - 默认为 `true`，是否扫描img标签作为资源加载
-
-**回调函数**
-
-loadFinish() - 资源加载完成的处理
-
-startEvent() - 游戏开始的处理
-
-pauseEvent() - 游戏暂停的处理
-
-endEvent() - 游戏结束的处理
-
-devicemotionEvent() - 摇一摇事件触发的回调
-
 **静态方法**
 
 prevPage() - 主体内容分页，上一页
@@ -194,7 +220,23 @@ pause() - 游戏暂停
 
 end() - 游戏结束
 
+restart() - 游戏重新开始
+
+on() - 绑定自定义事件
+
+off() - 移除自定义事件
+
+trigger() - 触发自定义事件
+
+getValue() - 获取config配置文件中的配置项的值
+
+shake() - 触发一次摇一摇事件
+
+loadFinish() - 触发加载完成的回调函数
+
 devicemotion() - 监听摇一摇事件
+
+getQueryString() - 获取url中的参数值
 
 ## 更新说明
 
@@ -203,3 +245,7 @@ devicemotion() - 监听摇一摇事件
 * 1.2 新增start,pause,end静态方法和startEvent,pauseEvent,endEvent回调函数
 * 1.3 新增devicemotion静态方法，和devicemotionEvent回调函数，用于监听摇一摇事件
 * 1.4 新增popupTool配置，是否使用弹出层工具，showToolPage静态方法新增popup用法
+* 1.5 新增restartEvent,updateEvent回调函数
+* 1.6 新增restart,shake,getQueryString,getValue,loadFinish,on,off,trigger静态方法
+* 1.7 新增game.ready入口
+* 1.8 新增config.json配置文件的方式进行开发
